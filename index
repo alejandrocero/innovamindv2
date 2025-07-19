@@ -1,0 +1,229 @@
+import React, { useState } from 'react';
+import { Search, Lightbulb, Wrench, AreaChart, Megaphone, Users, Network, Landmark, ShieldCheck, LogOut, UserCircle, Bell, ArrowLeft, Mail, KeyRound, Palette, Save } from 'lucide-react';
+
+// Helper component for App Icons on the Dashboard
+const AppIcon = ({ icon: Icon, label }) => (
+  <div className="flex flex-col items-center justify-center text-center p-4 bg-[#6b4f44]/50 rounded-lg shadow-md hover:bg-[#6b4f44]/80 transition-all duration-300 cursor-pointer aspect-square">
+    <Icon className="w-10 h-10 sm:w-12 sm:h-12 mb-3 text-white" />
+    <span className="text-white text-xs sm:text-sm font-light">{label}</span>
+  </div>
+);
+
+// Login Page Component
+const LoginPage = ({ onLogin }) => {
+  return (
+    <div className="min-h-screen bg-[#6b2f1a] font-sans flex items-center justify-center p-4">
+      <div className="w-full max-w-6xl mx-auto bg-[#8a4f3a] rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden">
+        <div className="w-full md:w-1/2 p-8 sm:p-12 flex flex-col justify-center items-center md:items-start text-center md:text-left">
+          <h1 className="text-white text-6xl sm:text-7xl font-['Georgia',_serif] mb-8">Innovamind</h1>
+          <img 
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop" 
+            alt="Equipo de trabajo colaborando"
+            className="rounded-lg shadow-lg object-cover w-full h-64 md:h-auto"
+            onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/600x400/8a4f3a/ffffff?text=Equipo+de+Trabajo'; }}
+          />
+        </div>
+        <div className="w-full md:w-1/2 p-8 sm:p-12 bg-[#6b2f1a] flex flex-col justify-center">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">INICIAR SESIÓN</h2>
+          <div className="space-y-6">
+            <div>
+              <label className="text-sm font-light text-white/80" htmlFor="username">Usuario</label>
+              <input 
+                id="username"
+                type="text" 
+                placeholder="Escribe tu nombre de usuario"
+                className="w-full mt-2 p-3 bg-white/10 rounded-lg border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
+              />
+            </div>
+            <div>
+              <label className="text-sm font-light text-white/80" htmlFor="password">Contraseña</label>
+              <input 
+                id="password"
+                type="password" 
+                placeholder="Escribe tu contraseña"
+                className="w-full mt-2 p-3 bg-white/10 rounded-lg border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
+              />
+            </div>
+          </div>
+          <button 
+            onClick={onLogin}
+            className="w-full mt-10 p-4 bg-white text-[#6b2f1a] font-bold rounded-lg hover:bg-gray-200 transition-colors duration-300 text-lg"
+          >
+            Entrar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Dashboard Page Component
+const DashboardPage = ({ onLogout, onNavigate }) => {
+  const userName = "Innovador"; 
+
+  const apps = [
+    { icon: Lightbulb, label: 'Innovación y Tecnología' },
+    { icon: Wrench, label: 'Herramientas y Sistemas' },
+    { icon: AreaChart, label: 'Análisis de mercado' },
+    { icon: Megaphone, label: 'Marketing y Ventas' },
+    { icon: Users, label: 'Mentoría y Asesoramiento' },
+    { icon: Network, label: 'Networking' },
+    { icon: Landmark, label: 'Finanzas y Contabilidad' },
+    { icon: ShieldCheck, label: 'Gestión de la Calidad' },
+  ];
+
+  return (
+    <div className="min-h-screen bg-[#6b2f1a] font-sans text-white p-4 sm:p-6 lg:p-8">
+      <div className="max-w-7xl mx-auto">
+        <header className="flex flex-col sm:flex-row justify-between items-center mb-8">
+          <h1 className="text-4xl font-['Georgia',_serif] mb-4 sm:mb-0">Innovamind</h1>
+          <div className="w-full sm:w-auto flex items-center space-x-4">
+            <div className="relative flex-grow sm:flex-grow-0">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60" size={20} />
+              <input 
+                type="text" 
+                placeholder="¿Cómo te podemos ayudar?"
+                className="w-full sm:w-64 lg:w-80 pl-10 pr-4 py-2 bg-white/10 rounded-lg border border-white/20 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50"
+              />
+            </div>
+            <button className="p-2 rounded-full hover:bg-white/20 transition-colors">
+              <Bell size={22} />
+            </button>
+            <button onClick={() => onNavigate('profile')} className="p-2 rounded-full hover:bg-white/20 transition-colors" title="Ver Perfil">
+              <UserCircle size={22} />
+            </button>
+            <button onClick={onLogout} className="p-2 rounded-full hover:bg-white/20 transition-colors" title="Cerrar Sesión">
+              <LogOut size={22} />
+            </button>
+          </div>
+        </header>
+        <div className="mb-12">
+          <h2 className="text-4xl font-light">¡Hola <span className="font-semibold">{userName}</span>!</h2>
+          <p className="text-xl text-white/80">Bienvenido(a) a tu espacio</p>
+        </div>
+        <div>
+          <h3 className="text-2xl font-bold mb-6">Apps</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
+            {apps.map((app, index) => (
+              <AppIcon key={index} icon={app.icon} label={app.label} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Profile Page Component
+const ProfilePage = ({ onNavigate, onLogout }) => {
+    return (
+        <div className="min-h-screen bg-[#6b2f1a] font-sans text-white p-4 sm:p-6 lg:p-8">
+            <div className="max-w-4xl mx-auto">
+                <header className="flex items-center justify-between mb-10">
+                    <button onClick={() => onNavigate('dashboard')} className="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
+                        <ArrowLeft size={20} />
+                        Volver al Panel
+                    </button>
+                    <h1 className="text-3xl font-['Georgia',_serif]">Perfil y Configuración</h1>
+                    <div className="w-24"></div> {/* Spacer */}
+                </header>
+
+                <div className="bg-[#8a4f3a]/50 p-8 rounded-2xl shadow-lg">
+                    {/* Profile Header */}
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6 mb-10">
+                        <img 
+                            src="https://placehold.co/128x128/ffffff/6b2f1a?text=User" 
+                            alt="Foto de perfil"
+                            className="w-32 h-32 rounded-full border-4 border-white/20"
+                        />
+                        <div className="flex-grow">
+                            <h2 className="text-3xl font-bold">Innovador</h2>
+                            <p className="text-white/70">innovador.pro@email.com</p>
+                            <button className="mt-4 px-4 py-2 text-sm bg-white/10 border border-white/20 rounded-lg hover:bg-white/20 transition-colors">
+                                Cambiar foto
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Form Fields */}
+                    <div className="space-y-8">
+                        <div>
+                            <h3 className="text-xl font-semibold mb-4 border-b border-white/20 pb-2">Información Personal</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="text-sm font-light text-white/80" htmlFor="fullName">Nombre Completo</label>
+                                    <input id="fullName" type="text" defaultValue="Innovador Pro" className="w-full mt-2 p-3 bg-white/10 rounded-lg border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/50"/>
+                                </div>
+                                <div>
+                                    <label className="text-sm font-light text-white/80" htmlFor="email">Correo Electrónico</label>
+                                    <input id="email" type="email" defaultValue="innovador.pro@email.com" className="w-full mt-2 p-3 bg-white/10 rounded-lg border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/50"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 className="text-xl font-semibold mb-4 border-b border-white/20 pb-2">Seguridad</h3>
+                            <div className="space-y-4">
+                               <button className="flex items-center gap-3 w-full text-left p-3 rounded-lg hover:bg-white/10 transition-colors">
+                                    <KeyRound className="text-white/70" />
+                                    <span>Cambiar Contraseña</span>
+                               </button>
+                               <button className="flex items-center gap-3 w-full text-left p-3 rounded-lg hover:bg-white/10 transition-colors">
+                                    <Bell className="text-white/70" />
+                                    <span>Gestionar Notificaciones</span>
+                               </button>
+                               <button className="flex items-center gap-3 w-full text-left p-3 rounded-lg hover:bg-white/10 transition-colors">
+                                    <Palette className="text-white/70" />
+                                    <span>Apariencia y Tema</span>
+                               </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex flex-col sm:flex-row items-center justify-between mt-12 pt-8 border-t border-white/20">
+                        <button onClick={onLogout} className="w-full sm:w-auto text-center px-6 py-3 text-red-400 hover:bg-red-500/20 rounded-lg transition-colors order-2 sm:order-1 mt-4 sm:mt-0">
+                            Cerrar Sesión
+                        </button>
+                         <button className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-white text-[#6b2f1a] font-bold rounded-lg hover:bg-gray-200 transition-colors order-1 sm:order-2">
+                            <Save size={20} />
+                            Guardar Cambios
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+// Main App Component
+export default function App() {
+  const [page, setPage] = useState('login'); // 'login', 'dashboard', 'profile'
+
+  const handleLogin = () => {
+    setPage('dashboard');
+  };
+
+  const handleLogout = () => {
+    setPage('login');
+  };
+  
+  const handleNavigate = (targetPage) => {
+    setPage(targetPage);
+  };
+
+  const renderPage = () => {
+    switch (page) {
+      case 'dashboard':
+        return <DashboardPage onLogout={handleLogout} onNavigate={handleNavigate} />;
+      case 'profile':
+        return <ProfilePage onLogout={handleLogout} onNavigate={handleNavigate} />;
+      case 'login':
+      default:
+        return <LoginPage onLogin={handleLogin} />;
+    }
+  };
+
+  return <>{renderPage()}</>;
+}
